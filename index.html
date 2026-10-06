@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dice Roller REST API Test</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="api-container">
+        <h1>Dice Roller REST API Test</h1>
+
+        <p>
+            This page tests the RESTful APIs. It does not implement
+            the Yahtzee Dice Roller application.
+        </p>
+
+        <div class="buttons">
+            <button onclick="wakeServer()">Test /wake</button>
+            <button onclick="testRoll()">Test /roll</button>
+            <button onclick="testCorsFailure()">Test CORS Failure</button>
+        </div>
+
+        <pre id="result">Select an API test.</pre>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
