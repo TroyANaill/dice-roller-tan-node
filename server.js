@@ -4,18 +4,22 @@ const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Set this in Azure App Service after you know the Static Web App URL.
-// Example:
-// ALLOWED_ORIGIN=https://your-static-site.azurestaticapps.net
 const allowedOrigin = process.env.ALLOWED_ORIGIN || "*";
 
-app.use(cors({
-    origin: allowedOrigin
-}));
+// Normal API routes use CORS.
+app.use((req, res, next) => {
+    if (req.path === "/cors-failure") {
+        next();
+        return;
+    }
+
+    cors({
+        origin: allowedOrigin
+    })(req, res, next);
+});
 
 app.use(express.json());
 
-// Basic API information.
 app.get("/", (req, res) => {
     res.json({
         application: "Dice Roller REST API",
@@ -24,7 +28,6 @@ app.get("/", (req, res) => {
     });
 });
 
-// Used by the static website to wake/test the Node.js server.
 app.get("/wake", (req, res) => {
     res.json({
         status: "awake",
@@ -32,7 +35,6 @@ app.get("/wake", (req, res) => {
     });
 });
 
-// The SERVER generates the random number.
 app.get("/roll", (req, res) => {
     const roll = Math.floor(Math.random() * 6) + 1;
 
@@ -41,11 +43,8 @@ app.get("/roll", (req, res) => {
     });
 });
 
-// This endpoint intentionally has no CORS header.
-// Use it to demonstrate the required CORS failure.
+// Intentionally has NO CORS permission.
 app.get("/cors-failure", (req, res) => {
-    res.removeHeader("Access-Control-Allow-Origin");
-
     res.json({
         message: "This endpoint intentionally demonstrates a CORS failure."
     });
