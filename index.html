@@ -1,14 +1,36 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
     <title>Dice Roller REST API Test</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+
+        button {
+            margin: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+
+        pre {
+            background: #f4f4f4;
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+
+    </style>
+
 </head>
 
 <body>
@@ -20,57 +42,61 @@
         Node.js server.
     </p>
 
+
     <button onclick="wakeServer()">
         Wake Server
     </button>
 
-    <button onclick="testD4()">
+    <button onclick="testAPI('/api')">
+        API Information
+    </button>
+
+    <button onclick="testAPI('/roll/d4')">
         Test D4
     </button>
 
-    <button onclick="testD6()">
+    <button onclick="testAPI('/roll/d6')">
         Test D6
     </button>
 
-    <button onclick="testD8()">
+    <button onclick="testAPI('/roll/d8')">
         Test D8
     </button>
 
-    <button onclick="testD10()">
+    <button onclick="testAPI('/roll/d10')">
         Test D10
     </button>
 
-    <button onclick="testD12()">
+    <button onclick="testAPI('/roll/d12')">
         Test D12
     </button>
 
-    <button onclick="testD20()">
+    <button onclick="testAPI('/roll/d20')">
         Test D20
     </button>
 
-    <button onclick="testD100()">
+    <button onclick="testAPI('/roll/d100')">
         Test D100
     </button>
+
 
     <h2>API Response</h2>
 
     <pre id="result">No API request made yet.</pre>
 
+
     <script>
 
-        const API_URL = "";
-
-        async function callAPI(endpoint) {
+        async function testAPI(endpoint) {
 
             try {
 
-                const response =
-                    await fetch(API_URL + endpoint);
+                const response = await fetch(endpoint);
 
                 if (!response.ok) {
 
                     throw new Error(
-                        `HTTP error: ${response.status}`
+                        "HTTP Error: " + response.status
                     );
 
                 }
@@ -87,65 +113,14 @@
                 document.getElementById("result").textContent =
                     "ERROR: " + error.message;
 
-                console.error(error);
-
             }
 
         }
 
 
-        function wakeServer() {
+        async function wakeServer() {
 
-            callAPI("/wake");
-
-        }
-
-
-        function testD4() {
-
-            callAPI("/roll/d4");
-
-        }
-
-
-        function testD6() {
-
-            callAPI("/roll/d6");
-
-        }
-
-
-        function testD8() {
-
-            callAPI("/roll/d8");
-
-        }
-
-
-        function testD10() {
-
-            callAPI("/roll/d10");
-
-        }
-
-
-        function testD12() {
-
-            callAPI("/roll/d12");
-
-        }
-
-
-        function testD20() {
-
-            callAPI("/roll/d20");
-
-        }
-
-
-        function testD100() {
-
-            callAPI("/roll/d100");
+            await testAPI("/wake");
 
         }
 
@@ -154,4 +129,3 @@
 </body>
 
 </html>
-```

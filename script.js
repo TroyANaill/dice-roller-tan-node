@@ -1,4 +1,4 @@
-// Replace this with the URL of your deployed Azure Node.js API.
+
 const API_BASE_URL = "dice-roller-tan-node-h2d7a7b7dthgdnbg.centralus-01.azurewebsites.net";
 
 const result = document.getElementById("result");
