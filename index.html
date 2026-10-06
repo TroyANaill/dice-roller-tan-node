@@ -1,29 +1,157 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title>Dice Roller REST API Test</title>
-    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <main class="api-container">
-        <h1>Dice Roller REST API Test</h1>
 
-        <p>
-            This page tests the RESTful APIs. It does not implement
-            the Yahtzee Dice Roller application.
-        </p>
+    <h1>Dice Roller REST API</h1>
 
-        <div class="buttons">
-            <button onclick="wakeServer()">Test /wake</button>
-            <button onclick="testRoll()">Test /roll</button>
-            <button onclick="testCorsFailure()">Test CORS Failure</button>
-        </div>
+    <p>
+        This page tests the RESTful APIs provided by the
+        Node.js server.
+    </p>
 
-        <pre id="result">Select an API test.</pre>
-    </main>
+    <button onclick="wakeServer()">
+        Wake Server
+    </button>
 
-    <script src="script.js"></script>
+    <button onclick="testD4()">
+        Test D4
+    </button>
+
+    <button onclick="testD6()">
+        Test D6
+    </button>
+
+    <button onclick="testD8()">
+        Test D8
+    </button>
+
+    <button onclick="testD10()">
+        Test D10
+    </button>
+
+    <button onclick="testD12()">
+        Test D12
+    </button>
+
+    <button onclick="testD20()">
+        Test D20
+    </button>
+
+    <button onclick="testD100()">
+        Test D100
+    </button>
+
+    <h2>API Response</h2>
+
+    <pre id="result">No API request made yet.</pre>
+
+    <script>
+
+        const API_URL = "";
+
+        async function callAPI(endpoint) {
+
+            try {
+
+                const response =
+                    await fetch(API_URL + endpoint);
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        `HTTP error: ${response.status}`
+                    );
+
+                }
+
+                const data = await response.json();
+
+                document.getElementById("result").textContent =
+                    JSON.stringify(data, null, 2);
+
+            }
+
+            catch (error) {
+
+                document.getElementById("result").textContent =
+                    "ERROR: " + error.message;
+
+                console.error(error);
+
+            }
+
+        }
+
+
+        function wakeServer() {
+
+            callAPI("/wake");
+
+        }
+
+
+        function testD4() {
+
+            callAPI("/roll/d4");
+
+        }
+
+
+        function testD6() {
+
+            callAPI("/roll/d6");
+
+        }
+
+
+        function testD8() {
+
+            callAPI("/roll/d8");
+
+        }
+
+
+        function testD10() {
+
+            callAPI("/roll/d10");
+
+        }
+
+
+        function testD12() {
+
+            callAPI("/roll/d12");
+
+        }
+
+
+        function testD20() {
+
+            callAPI("/roll/d20");
+
+        }
+
+
+        function testD100() {
+
+            callAPI("/roll/d100");
+
+        }
+
+    </script>
+
 </body>
+
 </html>
+```
